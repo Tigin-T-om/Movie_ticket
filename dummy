@@ -1,0 +1,58 @@
+<?php include 'cguidence_header.php';
+extract($_GET);
+if (isset($_POST['sub'])) 
+{
+	extract($_POST);
+	$q="insert into chats values(null,'$logid','$loid','career_guidence','student','$msg',now())";
+	insert($q);
+}
+
+?>
+<center>
+	<h1>chat with tutor</h1><br><br>
+	<form method="post">
+		<table class="table" style="width: 600px">
+
+				
+		<?php
+		$q1="select * from chats where sender_id='$logid' or (receiver_id='$logid')";
+		$ch=select($q1);
+		foreach ($ch as $key) 
+		{
+			if ($key['sender_id']==$logid) 
+			{
+				
+		
+			?>
+
+
+			<tr>
+					
+				<td></td>
+				<td><?php echo $key['message'] ?></td>
+			</tr>
+
+			<?php
+		}
+		else{
+
+			?>
+			<tr>
+					
+				
+				<td><?php echo $key['message'] ?></td>
+				<td></td>
+			</tr>
+			<?php
+}
+		}  ?>
+			
+			<tr>
+				<td align="center"><input type="text" name="msg" class="form-control"><input type="submit" name="sub" class="btn btn-success" value="send"></td>
+			</tr>
+
+		</table>
+	</form>
+</center>
+
+<?php include 'footer.php'?>
